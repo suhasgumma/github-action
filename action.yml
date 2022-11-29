@@ -44,6 +44,11 @@ inputs:
       Run `kubescape scan -h` for listing supported formats
     required: false
     default: junit
+  suggestFix:
+    description: |
+      Creates a PR suggesting fixes if set to true
+    required: false
+    default: false
 runs:
   using: docker
   image: Dockerfile
