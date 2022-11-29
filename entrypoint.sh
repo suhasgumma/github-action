@@ -40,7 +40,7 @@ SEVERITY_THRESHOLD_OPT=$([ ! -z "$INPUT_SEVERITYTHRESHOLD" ] && echo --severity-
 
 if [ "$INPUT_SUGGESTFIX" = true];
 then
-    echo "I am here"
+    echo $INPUT_SUGGESTFIX
     COMMANDONE = "kubescape scan $FRAMEWORKS_CMD $CONTROLS_CMD $FILES --format json --format-version v2 --output output.json  --use-artifacts-from $ARTIFACTS_PATH"
     COMMANDTWO = "yes | kubescape fix output.json"
     COMMANDTHREE = "rm output.json"
