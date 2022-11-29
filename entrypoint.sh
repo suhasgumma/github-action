@@ -38,7 +38,7 @@ ACCOUNT_OPT=$([ ! -z "$INPUT_ACCOUNT" ] && echo --account $INPUT_ACCOUNT --submi
 FAIL_THRESHOLD_OPT=$([ ! -z "$INPUT_FAILEDTHRESHOLD" ] && echo --fail-threshold $INPUT_FAILEDTHRESHOLD || echo "")
 SEVERITY_THRESHOLD_OPT=$([ ! -z "$INPUT_SEVERITYTHRESHOLD" ] && echo --severity-threshold $INPUT_SEVERITYTHRESHOLD || echo "")
 
-if [ "$INPUT_SUGGESTFIX" = true];
+if [ "$INPUT_SUGGESTFIX" = $true];
 then
     echo $INPUT_SUGGESTFIX
     COMMANDONE = "kubescape scan $FRAMEWORKS_CMD $CONTROLS_CMD $FILES --format json --format-version v2 --output output.json  --use-artifacts-from $ARTIFACTS_PATH"
