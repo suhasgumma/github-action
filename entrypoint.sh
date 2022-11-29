@@ -51,6 +51,7 @@ then
 
 else
     echo "No, I am here"
+    echo $INPUT_SUGGESTFIX
     COMMAND="kubescape scan $FRAMEWORKS_CMD $CONTROLS_CMD $FILES $ACCOUNT_OPT $FAIL_THRESHOLD_OPT $SEVERITY_THRESHOLD_OPT --format $INPUT_FORMAT --output $OUTPUT_FILE --use-artifacts-from $ARTIFACTS_PATH"
     eval $COMMAND
 
