@@ -1,4 +1,4 @@
-FROM suhasgumma/kubescape:1.6
+FROM suhasgumma/kubescape:1.7
 
 # Kubescape uses root privileges for writing the results to a file
 USER root
