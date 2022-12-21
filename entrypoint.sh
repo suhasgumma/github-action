@@ -32,15 +32,13 @@ SEVERITY_THRESHOLD_OPT=$([ ! -z "$INPUT_SEVERITYTHRESHOLD" ] && echo --severity-
 
 if [ $INPUT_SUGGESTFIX ];
 then
-    COMMANDONE="kubescape scan $FRAMEWORKS_CMD $CONTROLS_CMD $FILES --format json --format-version v2 --output output.json  --use-artifacts-from $ARTIFACTS_PATH"
-    COMMANDTWO="yes | kubescape fix output.json"
-    COMMANDTHREE="rm output.json"
+    SCAN_CMD="kubescape scan $FRAMEWORKS_CMD $CONTROLS_CMD $FILES --format json --format-version v2 --output output.json  --use-artifacts-from $ARTIFACTS_PATH"
+    FIX_CMD="yes | kubescape fix output.json"
 
-    eval $COMMANDONE
-    eval $COMMANDTWO
-    eval $COMMANDTHREE
+    eval $SCAN_CMD
+    eval $FIX_CMD
 
 else
-    COMMAND="kubescape scan $FRAMEWORKS_CMD $CONTROLS_CMD $FILES $ACCOUNT_OPT $FAIL_THRESHOLD_OPT $SEVERITY_THRESHOLD_OPT --format $INPUT_FORMAT --output $OUTPUT_FILE --use-artifacts-from $ARTIFACTS_PATH"
+    COMMAND="kubescape scan $FRAMEWORKS_CMD $CONTROLS_CMD $FILES $ACCOUNT_OPT $FAIL_THRESHOLD_OPT $SEVERITY_THRESHOLD_OPT --format $INPUT_FORMAT --format-version v2 --output $OUTPUT_FILE --use-artifacts-from $ARTIFACTS_PATH"
     eval $COMMAND
 fi
