@@ -42,9 +42,11 @@ if [ $INPUT_SUGGESTFIX ];
 then
     SCAN_CMD="kubescape scan $FRAMEWORKS_CMD $CONTROLS_CMD $FILES --format json --format-version v2 --output output.json  --use-artifacts-from $ARTIFACTS_PATH"
     FIX_CMD="yes | kubescape fix output.json"
+    C="rm output.json"
 
     eval $SCAN_CMD
     eval $FIX_CMD
+    eval C
 
 else
     COMMAND="kubescape scan $FRAMEWORKS_CMD $CONTROLS_CMD $FILES $ACCOUNT_OPT $FAIL_THRESHOLD_OPT $SEVERITY_THRESHOLD_OPT --format $INPUT_FORMAT --output $OUTPUT_FILE --use-artifacts-from $ARTIFACTS_PATH"
