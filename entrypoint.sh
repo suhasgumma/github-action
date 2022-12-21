@@ -1,12 +1,9 @@
 #!/bin/sh
-
 set -e
-
 if [ ! -z "$INPUT_FRAMEWORKS" ] && [ ! -z "$INPUT_CONTROLS" ]; then
 echo "Framework and Control is specified. Please specify either one of them or neither"
 exit 1
 fi
-
 # Split the controls by comma and concatenate with quotes around each control
 if [ ! -z "$INPUT_CONTROLS" ]; then
     CONTROLS=""
@@ -20,36 +17,30 @@ if [ ! -z "$INPUT_CONTROLS" ]; then
     done
     CONTROLS=$(echo "${CONTROLS%?}")
 fi
-
 # Subcommands
 ARTIFACTS_PATH="/home/ks/.kubescape"
 FRAMEWORKS_CMD=$([ ! -z "$INPUT_FRAMEWORKS" ] && echo "framework $INPUT_FRAMEWORKS" || echo "")
 CONTROLS_CMD=$([ ! -z "$INPUT_CONTROLS" ] && echo control $CONTROLS || echo "")
-
 # Files to scan
 FILES=$([ ! -z "$INPUT_FILES" ] && echo "$INPUT_FILES" || echo .)
-
 # Output file name
 OUTPUT_FILE=$([ ! -z "$INPUT_OUTPUTFILE" ] && echo "$INPUT_OUTPUTFILE" || echo "results.out")
-
 # Command-line options
 ACCOUNT_OPT=$([ ! -z "$INPUT_ACCOUNT" ] && echo --account $INPUT_ACCOUNT --submit || echo "")
-
 FAIL_THRESHOLD_OPT=$([ ! -z "$INPUT_FAILEDTHRESHOLD" ] && echo --fail-threshold $INPUT_FAILEDTHRESHOLD || echo "")
 SEVERITY_THRESHOLD_OPT=$([ ! -z "$INPUT_SEVERITYTHRESHOLD" ] && echo --severity-threshold $INPUT_SEVERITYTHRESHOLD || echo "")
 
 if [ $INPUT_SUGGESTFIX ];
 then
-    SCAN_CMD="kubescape scan $FRAMEWORKS_CMD $CONTROLS_CMD $FILES --format json --format-version v2 --output output.json  --use-artifacts-from $ARTIFACTS_PATH"
-    FIX_CMD="yes | kubescape fix output.json"
-    C="rm output.json"
+    COMMANDONE="kubescape scan $FRAMEWORKS_CMD $CONTROLS_CMD $FILES --format json --format-version v2 --output output.json  --use-artifacts-from $ARTIFACTS_PATH"
+    COMMANDTWO="yes | kubescape fix output.json"
+    COMMANDTHREE="rm output.json"
 
-    eval $SCAN_CMD
-    eval $FIX_CMD
-    eval $C
+    eval $COMMANDONE
+    eval $COMMANDTWO
+    eval $COMMANDTHREE
 
 else
     COMMAND="kubescape scan $FRAMEWORKS_CMD $CONTROLS_CMD $FILES $ACCOUNT_OPT $FAIL_THRESHOLD_OPT $SEVERITY_THRESHOLD_OPT --format $INPUT_FORMAT --output $OUTPUT_FILE --use-artifacts-from $ARTIFACTS_PATH"
     eval $COMMAND
-
 fi
